@@ -1,6 +1,6 @@
 {
-  "name": "Ficha técnica",
-  "short_name": "Ficha técnica",
+  "name": "Formularios Técnicos SUNAPA",
+  "short_name": "SUNAPA Formularios",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#fffdf8",

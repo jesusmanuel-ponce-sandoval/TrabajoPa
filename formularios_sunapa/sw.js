@@ -1,5 +1,14 @@
-const CACHE_NAME = 'ficha-tecnica-v1';
-const APP_SHELL = ['./', './index.html', './css/styles.css', './js/app.js', './js/pdf-generator.js', './manifest.json'];
+const CACHE_NAME = 'formularios-sunapa-v2';
+const APP_SHELL = [
+  './',
+  './index.html',
+  './css/styles.css',
+  './js/app.js',
+  './js/pdf-generator.js',
+  './manifest.json',
+  './assets/img/Header sunapajpg.jpg',
+  './assets/img/footer jpg.png'
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
