@@ -77,14 +77,27 @@ function fillSimpleFields(formId) {
     });
 }
 
-function fillPhoto(formId) {
-    const img = document.getElementById("out-foto-img-" + formId);
-    if (img && fotoData[formId]) {
-        img.src = fotoData[formId];
-        img.style.display = "block";
-    } else if (img) {
-        img.style.display = "none";
-    }
+function fillSignatures(formId) {
+    const view = document.getElementById("view-" + formId);
+    if (!view) return;
+    view.querySelectorAll("canvas.signature-pad").forEach(canvas => {
+        const outImg = document.getElementById("out-" + canvas.id);
+        if (!outImg) return;
+        const dataUrl = signatureData[canvas.id];
+        if (dataUrl) {
+            outImg.src = dataUrl;
+            outImg.style.display = "block";
+        } else {
+            outImg.style.display = "none";
+        }
+    });
+}
+
+function fillPhotos(formId) {
+    const container = document.getElementById("out-foto-gallery-" + formId);
+    if (!container) return;
+    const fotos = fotoData[formId] || [];
+    container.innerHTML = fotos.map(src => `<img src="${src}">`).join("");
 }
 
 /* ============================================================
@@ -145,7 +158,7 @@ function abrirVentanaImpresion(formId, fileNamePrefix) {
    ============================================================ */
 window.generarPDF_ficha = function () {
     fillSimpleFields("ficha");
-    fillPhoto("ficha");
+    fillPhotos("ficha");
     abrirVentanaImpresion("ficha", "Informe_AI_ET_PF");
 };
 
@@ -153,26 +166,27 @@ window.generarPDF_acta = function () {
     fillSimpleFields("acta");
     buildChecklistOutput("acta", ACTA_CHECKLIST, "out-acta-checklist");
     buildParamsOutput("acta", ACTA_PARAMS, "out-acta-params");
-    fillPhoto("acta");
+    fillSignatures("acta");
+    fillPhotos("acta");
     abrirVentanaImpresion("acta", "Acta_Entrega_Recepcion");
 };
 
 window.generarPDF_previo = function () {
     fillSimpleFields("previo");
     buildChecklistOutput("previo", PREVIO_CHECKLIST, "out-previo-checklist");
-    fillPhoto("previo");
+    fillPhotos("previo");
     abrirVentanaImpresion("previo", "Formato_Previo_ET_PF");
 };
 
 window.generarPDF_vt = function () {
     fillSimpleFields("vt");
-    fillPhoto("vt");
+    fillPhotos("vt");
     abrirVentanaImpresion("vt", "Informe_Visita_Tecnica");
 };
 
 window.generarPDF_ot = function () {
     fillSimpleFields("ot");
     buildCostOutput("ot", OT_COST_ROWS, "out-ot-cost-table");
-    fillPhoto("ot");
+    fillPhotos("ot");
     abrirVentanaImpresion("ot", "Orden_de_Trabajo");
 };

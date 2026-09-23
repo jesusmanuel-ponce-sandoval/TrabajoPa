@@ -1,4 +1,4 @@
-const CACHE_NAME = 'formularios-sunapa-v2';
+const CACHE_NAME = 'formularios-sunapa-v3';
 const APP_SHELL = [
   './',
   './index.html',

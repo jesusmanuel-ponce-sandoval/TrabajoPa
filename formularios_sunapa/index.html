@@ -101,9 +101,10 @@
             <fieldset>
                 <legend>Fotografías</legend>
                 <div class="form-group">
-                    <label>Añadir foto de evidencia:</label>
-                    <input type="file" id="ficha-foto" data-form="ficha" accept="image/*" capture="environment">
-                    <img id="preview-foto-ficha" style="display:none; width: 100%; margin-top: 10px; border-radius: 5px;">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="ficha-foto" data-form="ficha" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-ficha"></div>
+                    <div class="photo-count" id="photo-count-ficha"></div>
                 </div>
             </fieldset>
 
@@ -175,15 +176,27 @@
             <fieldset>
                 <legend>Firmas</legend>
                 <div class="form-group"><label>Profesional Responsable:</label><input type="text" id="acta-profesional" value="Ing. Alejandro Ponce Orces"></div>
-                <div class="form-group"><label>Conformidad del Cliente (nombre):</label><input type="text" id="acta-cliente-nombre"></div>
+                <div class="signature-block">
+                    <label>Firma del profesional:</label>
+                    <canvas class="signature-pad" id="acta-profesional-firma" data-sig-form="acta" width="600" height="180"></canvas>
+                    <div class="signature-actions"><button type="button" class="btn-clear-sig" data-clear-target="acta-profesional-firma">Limpiar firma</button></div>
+                </div>
+
+                <div class="form-group" style="margin-top:20px;"><label>Conformidad del Cliente (nombre):</label><input type="text" id="acta-cliente-nombre"></div>
+                <div class="signature-block">
+                    <label>Firma del cliente:</label>
+                    <canvas class="signature-pad" id="acta-cliente-firma" data-sig-form="acta" width="600" height="180"></canvas>
+                    <div class="signature-actions"><button type="button" class="btn-clear-sig" data-clear-target="acta-cliente-firma">Limpiar firma</button></div>
+                </div>
             </fieldset>
 
             <fieldset>
                 <legend>Fotografías</legend>
                 <div class="form-group">
-                    <label>Añadir foto de evidencia:</label>
-                    <input type="file" id="acta-foto" data-form="acta" accept="image/*" capture="environment">
-                    <img id="preview-foto-acta" style="display:none; width: 100%; margin-top: 10px; border-radius: 5px;">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="acta-foto" data-form="acta" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-acta"></div>
+                    <div class="photo-count" id="photo-count-acta"></div>
                 </div>
             </fieldset>
 
@@ -222,9 +235,10 @@
             <fieldset>
                 <legend>Fotografías</legend>
                 <div class="form-group">
-                    <label>Añadir foto de evidencia:</label>
-                    <input type="file" id="previo-foto" data-form="previo" accept="image/*" capture="environment">
-                    <img id="preview-foto-previo" style="display:none; width: 100%; margin-top: 10px; border-radius: 5px;">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="previo-foto" data-form="previo" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-previo"></div>
+                    <div class="photo-count" id="photo-count-previo"></div>
                 </div>
             </fieldset>
 
@@ -278,9 +292,10 @@
             <fieldset>
                 <legend>Fotografías</legend>
                 <div class="form-group">
-                    <label>Añadir foto de evidencia:</label>
-                    <input type="file" id="vt-foto" data-form="vt" accept="image/*" capture="environment">
-                    <img id="preview-foto-vt" style="display:none; width: 100%; margin-top: 10px; border-radius: 5px;">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="vt-foto" data-form="vt" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-vt"></div>
+                    <div class="photo-count" id="photo-count-vt"></div>
                 </div>
             </fieldset>
 
@@ -317,9 +332,10 @@
             <fieldset>
                 <legend>Fotografías</legend>
                 <div class="form-group">
-                    <label>Añadir foto de evidencia:</label>
-                    <input type="file" id="ot-foto" data-form="ot" accept="image/*" capture="environment">
-                    <img id="preview-foto-ot" style="display:none; width: 100%; margin-top: 10px; border-radius: 5px;">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="ot-foto" data-form="ot" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-ot"></div>
+                    <div class="photo-count" id="photo-count-ot"></div>
                 </div>
             </fieldset>
 
@@ -383,7 +399,7 @@
 
             <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
             <div style="text-align:center; margin-top:5px;">
-                <img id="out-foto-img-ficha" style="max-width:90%; max-height:250px; display:none;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-ficha"></div>
             </div>
 
             <div style="margin-top:30px; font-weight:bold; font-size:11px;">
@@ -426,12 +442,18 @@
 
             <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
             <div style="text-align:center; margin-top:5px;">
-                <img id="out-foto-img-acta" style="max-width:90%; max-height:250px; display:none;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-acta"></div>
             </div>
 
-            <div style="margin-top:30px; font-size:11px; display:flex; justify-content:space-between;">
-                <p><strong>Profesional Responsable:</strong><br><span id="out-acta-profesional"></span></p>
-                <p><strong>Conformidad del Cliente:</strong><br><span id="out-acta-cliente-nombre"></span></p>
+            <div style="margin-top:30px; font-size:11px; display:flex; justify-content:space-between; gap:20px;">
+                <div style="text-align:center; flex:1;">
+                    <img id="out-acta-profesional-firma" style="max-width:100%; max-height:70px; display:none; border-bottom:1px solid #333;">
+                    <p style="border-top:1px solid #333; margin-top:2px; padding-top:2px;"><strong>Profesional Responsable</strong><br><span id="out-acta-profesional"></span></p>
+                </div>
+                <div style="text-align:center; flex:1;">
+                    <img id="out-acta-cliente-firma" style="max-width:100%; max-height:70px; display:none; border-bottom:1px solid #333;">
+                    <p style="border-top:1px solid #333; margin-top:2px; padding-top:2px;"><strong>Conformidad del Cliente</strong><br><span id="out-acta-cliente-nombre"></span></p>
+                </div>
             </div>
 
             <div style="position:absolute; bottom:0; width:100%; font-size:9px; color:#333;">
@@ -461,7 +483,7 @@
 
             <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
             <div style="text-align:center; margin-top:5px;">
-                <img id="out-foto-img-previo" style="max-width:90%; max-height:250px; display:none;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-previo"></div>
             </div>
 
             <div style="margin-top:30px; font-weight:bold; font-size:11px;">
@@ -497,7 +519,7 @@
 
             <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
             <div style="text-align:center; margin-top:5px;">
-                <img id="out-foto-img-vt" style="max-width:90%; max-height:250px; display:none;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-vt"></div>
             </div>
 
             <div style="margin-top:30px; font-weight:bold; font-size:11px;">
@@ -528,7 +550,7 @@
 
             <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
             <div style="text-align:center; margin-top:5px;">
-                <img id="out-foto-img-ot" style="max-width:90%; max-height:250px; display:none;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-ot"></div>
             </div>
 
             <div style="margin-top:30px; font-weight:bold; font-size:11px;">
